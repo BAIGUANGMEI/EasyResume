@@ -1,0 +1,113 @@
+{
+  "name": "SAN ZHANG",
+  "phone": "(+86)15057789234",
+  "email": "zhangsan@outlook.com",
+  "education": [
+    {
+      "institution": "Hangzhou Dianzi University",
+      "location": "Hangzhou, China",
+      "degree": "Bachelor",
+      "major": "Information management and Information System",
+      "start": "Aug. 2021",
+      "end": "Jun. 2025",
+      "GPA": 4.6,
+      "TotalGPA": 5.0
+    },
+    {
+      "institution": "University of Hong Kong",
+      "location": "Hong Kong",
+      "degree": "Master",
+      "major": "Ecommerce",
+      "start": "Aug. 2025",
+      "end": "Jun. 2026",
+      "GPA": 3.8,
+      "TotalGPA": 4.0
+    }
+  ],
+  "workExperience": [
+    {
+      "company": "Morgan Stanley",
+      "location": "Shanghai, China",
+      "position": "Intern, Data Developer",
+      "start": "November 2024",
+      "end": "February 2025",
+      "details": [
+        "Developed data pipelines using Python and SQL",
+        "Worked with large datasets to extract insights and improve performance",
+        "Collaborated with data scientists to implement machine learning models",
+        "Participated in daily stand-ups and sprint planning meetings"
+      ]
+    },
+    {
+      "company": "Tencent",
+      "location": "Shenzhen, China",
+      "position": "Intern, Software Engineer",
+      "start": "June 2024",
+      "end": "August 2024",
+      "details": [
+        "Worked on backend services using Node.js and Express",
+        "Collaborated with cross-functional teams to deliver high-quality software",
+        "Participated in code reviews and contributed to team discussions"
+      ]
+    },
+    {
+      "company": "Alibaba",
+      "location": "Hangzhou, China",
+      "position": "Intern, Frontend Developer",
+      "start": "June 2023",
+      "end": "August 2023",
+      "details": [
+        "Developed user interfaces using Vue.js and Vuetify",
+        "Participated in code reviews and contributed to team discussions"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "E-commerce Platform",
+      "position": "Team Leader",
+      "start": "November 2024",
+      "end": "February 2025",
+      "details": [
+        "Developed and maintained web applications using Vue.js",
+        "Responsible for the front-end architecture and design"
+      ]
+    },
+    {
+      "title": "Data Analysis Tool",
+      "position": "Developer",
+      "start": "June 2024",
+      "end": "August 2024",
+      "details": [
+        "Created data visualization dashboards using D3.js",
+        "Implemented data processing algorithms in Python",
+        "Worked with RESTful APIs to fetch and display data"
+      ]
+    }
+  ],
+  "skillHonor": {
+    "languages": [
+      "Chinese (Native)",
+      "English (IELTS 7)"
+    ],
+    "programming": [
+      "Python",
+      "JavaScript",
+      "Java",
+      "C++"
+    ],
+    "office": [
+      "Microsoft Office",
+      "Excel",
+      "PowerPoint"
+    ],
+    "awards": [
+      "First Prize in National College Student Programming Contest",
+      "Second Prize in National College Student Mathematics Contest"
+    ],
+    "scholarships": [
+      "National Scholarship",
+      "University Scholarship"
+    ]
+  }
+}
