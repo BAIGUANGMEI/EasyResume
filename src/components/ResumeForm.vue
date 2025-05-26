@@ -1,256 +1,276 @@
 <template>
-
-  <div class="resume-header">
+<div class="resume-header">
     <h1>Easy Resume</h1>
-  </div>
+</div>
+<div class="container">
+    
+  <!-- 表单部分 -->
+  <div class="form-container">
+    <div class="resume-form">
+      <div class="section-header" @click="toggleSection('basic')">
+        <h2>Basic Information</h2>
+        <span class="toggle-icon">{{ sectionStates.basic ? '▼' : '▶' }}</span>
+      </div>
+      <div class="form-section" v-show="sectionStates.basic">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input id="name" type="text" v-model="form.name">
+        </div>
+        <div class="form-group">
+          <label for="phone">Tel</label>
+          <input id="phone" type="text" v-model="form.phone">
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input id="email" type="email" v-model="form.email">
+        </div>
+      </div>
 
-  <div class="resume-form">
-    <div class="section-header" @click="toggleSection('basic')">
-      <h2>Basic Information</h2>
-      <span class="toggle-icon">{{ sectionStates.basic ? '▼' : '▶' }}</span>
-    </div>
-    <div class="form-section" v-show="sectionStates.basic">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input id="name" type="text" v-model="form.name">
+      <div class="section-header" @click="toggleSection('education')">
+        <h2>Education</h2>
+        <span class="toggle-icon">{{ sectionStates.education ? '▼' : '▶' }}</span>
       </div>
-      <div class="form-group">
-        <label for="phone">Tel</label>
-        <input id="phone" type="text" v-model="form.phone">
+      <div class="form-section" v-show="sectionStates.education">
+        <div class="card" v-for="(edu, idx) in form.education" :key="idx">
+          <div class="form-row">
+            <div class="form-group half">
+              <label>School or Institution</label>
+              <input type="text" v-model="edu.institution">
+            </div>
+            <div class="form-group half">
+              <label>Location</label>
+              <input type="text" v-model="edu.location">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group third">
+              <label>Degree</label>
+              <input type="text" v-model="edu.degree">
+            </div>
+            <div class="form-group third">
+              <label>Major</label>
+              <input type="text" v-model="edu.major">
+            </div>
+            <div class="form-group sixth">
+              <label>GPA</label>
+              <input type="text" v-model="edu.GPA">
+            </div>
+            <div class="form-group sixth">
+              <label>Total GPA</label>
+              <input type="text" v-model="edu.TotalGPA">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group half">
+              <label>Start Time</label>
+              <input type="text" v-model="edu.start">
+            </div>
+            <div class="form-group half">
+              <label>End Time</label>
+              <input type="text" v-model="edu.end">
+            </div>
+          </div>
+          <button class="btn btn-danger" @click="removeEducation(idx)">Delete</button>
+        </div>
+        <button class="btn btn-primary" @click="addEducation">Add Education</button>
       </div>
-      <div class="form-group">
-        <label for="email">E-mail</label>
-        <input id="email" type="email" v-model="form.email">
-      </div>
-    </div>
 
-    <div class="section-header" @click="toggleSection('education')">
-      <h2>Education</h2>
-      <span class="toggle-icon">{{ sectionStates.education ? '▼' : '▶' }}</span>
-    </div>
-    <div class="form-section" v-show="sectionStates.education">
-      <div class="card" v-for="(edu, idx) in form.education" :key="idx">
-        <div class="form-row">
-          <div class="form-group half">
-            <label>School or Institution</label>
-            <input type="text" v-model="edu.institution">
-          </div>
-          <div class="form-group half">
-            <label>Location</label>
-            <input type="text" v-model="edu.location">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group third">
-            <label>Degree</label>
-            <input type="text" v-model="edu.degree">
-          </div>
-          <div class="form-group third">
-            <label>Major</label>
-            <input type="text" v-model="edu.major">
-          </div>
-          <div class="form-group sixth">
-            <label>GPA</label>
-            <input type="text" v-model="edu.GPA">
-          </div>
-          <div class="form-group sixth">
-            <label>Total GPA</label>
-            <input type="text" v-model="edu.TotalGPA">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group half">
-            <label>Start Time</label>
-            <input type="text" v-model="edu.start">
-          </div>
-          <div class="form-group half">
-            <label>End Time</label>
-            <input type="text" v-model="edu.end">
-          </div>
-        </div>
-        <button class="btn btn-danger" @click="removeEducation(idx)">Delete</button>
+      <div class="section-header" @click="toggleSection('work')">
+        <h2>Work Experience</h2>
+        <span class="toggle-icon">{{ sectionStates.work ? '▼' : '▶' }}</span>
       </div>
-      <button class="btn btn-primary" @click="addEducation">Add Education</button>
-    </div>
-
-    <div class="section-header" @click="toggleSection('work')">
-      <h2>Work Experience</h2>
-      <span class="toggle-icon">{{ sectionStates.work ? '▼' : '▶' }}</span>
-    </div>
-    <div class="form-section" v-show="sectionStates.work">
-      <div class="card" v-for="(work, idx) in form.workExperience" :key="idx">
-        <div class="form-row">
-          <div class="form-group half">
-            <label>Company</label>
-            <input type="text" v-model="work.company">
+      <div class="form-section" v-show="sectionStates.work">
+        <div class="card" v-for="(work, idx) in form.workExperience" :key="idx">
+          <div class="form-row">
+            <div class="form-group half">
+              <label>Company</label>
+              <input type="text" v-model="work.company">
+            </div>
+            <div class="form-group half">
+              <label>Location</label>
+              <input type="text" v-model="work.location">
+            </div>
           </div>
-          <div class="form-group half">
-            <label>Location</label>
-            <input type="text" v-model="work.location">
+          <div class="form-row">
+            <div class="form-group half">
+              <label>Position</label>
+              <input type="text" v-model="work.position">
+            </div>
+            <div class="form-group quarter">
+              <label>Start Time</label>
+              <input type="text" v-model="work.start">
+            </div>
+            <div class="form-group quarter">
+              <label>End Time</label>
+              <input type="text" v-model="work.end">
+            </div>
           </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea v-model="work.detailsStr" rows="3" placeholder="Line break as a new record"></textarea>
+          </div>
+          <button class="btn btn-danger" @click="removeWork(idx)">Delete</button>
         </div>
-        <div class="form-row">
-          <div class="form-group half">
-            <label>Position</label>
-            <input type="text" v-model="work.position">
+        <button class="btn btn-primary" @click="addWork">Add Work Experience</button>
+      </div>
+
+      <div class="section-header" @click="toggleSection('projects')">
+        <h2>Projects Experience</h2>
+        <span class="toggle-icon">{{ sectionStates.projects ? '▼' : '▶' }}</span>
+      </div>
+      <div class="form-section" v-show="sectionStates.projects">
+        <div class="card" v-for="(proj, idx) in form.projects" :key="idx">
+          <div class="form-row">
+            <div class="form-group half">
+              <label>Project Name</label>
+              <input type="text" v-model="proj.title">
+            </div>
+            <div class="form-group half">
+              <label>Position</label>
+              <input type="text" v-model="proj.position">
+            </div>
           </div>
-          <div class="form-group quarter">
-            <label>Start Time</label>
-            <input type="text" v-model="work.start">
+          <div class="form-row">
+            <div class="form-group half">
+              <label>Start Time</label>
+              <input type="text" v-model="proj.start">
+            </div>
+            <div class="form-group half">
+              <label>End Time</label>
+              <input type="text" v-model="proj.end">
+            </div>
           </div>
-          <div class="form-group quarter">
-            <label>End Time</label>
-            <input type="text" v-model="work.end">
+          <div class="form-group">
+            <label>Description</label>
+            <textarea v-model="proj.detailsStr" rows="3" placeholder="Line break as a new record"></textarea>
+          </div>
+          <button class="btn btn-danger" @click="removeProject(idx)">Delete</button>
+        </div>
+        <button class="btn btn-primary" @click="addProject">Add Projects Experience</button>
+      </div>
+
+      <div class="section-header" @click="toggleSection('skills')">
+        <h2>Skills and Honor</h2>
+        <span class="toggle-icon">{{ sectionStates.skills ? '▼' : '▶' }}</span>
+      </div>
+      <div class="form-section" v-show="sectionStates.skills">
+        <div class="form-group">
+          <label>Language</label>
+          <div class="tag-input">
+            <input 
+              type="text" 
+              placeholder="Press Enter to add"
+              v-model="newLanguage" 
+              @keydown.enter.prevent="addTag('languages')"
+            >
+            <div class="tags">
+              <span class="tag" v-for="(tag, i) in form.skillHonor.languages" :key="i">
+                {{ tag }}
+                <button class="tag-remove" @click="removeTag('languages', i)">×</button>
+              </span>
+            </div>
           </div>
         </div>
         <div class="form-group">
-          <label>Description</label>
-          <textarea v-model="work.detailsStr" rows="3" placeholder="Line break as a new record"></textarea>
-        </div>
-        <button class="btn btn-danger" @click="removeWork(idx)">Delete</button>
-      </div>
-      <button class="btn btn-primary" @click="addWork">Add Work Experience</button>
-    </div>
-
-    <div class="section-header" @click="toggleSection('projects')">
-      <h2>Projects Experience</h2>
-      <span class="toggle-icon">{{ sectionStates.projects ? '▼' : '▶' }}</span>
-    </div>
-    <div class="form-section" v-show="sectionStates.projects">
-      <div class="card" v-for="(proj, idx) in form.projects" :key="idx">
-        <div class="form-row">
-          <div class="form-group half">
-            <label>Project Name</label>
-            <input type="text" v-model="proj.title">
-          </div>
-          <div class="form-group half">
-            <label>Position</label>
-            <input type="text" v-model="proj.position">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group half">
-            <label>Start Time</label>
-            <input type="text" v-model="proj.start">
-          </div>
-          <div class="form-group half">
-            <label>End Time</label>
-            <input type="text" v-model="proj.end">
+          <label>Programming Language</label>
+          <div class="tag-input">
+            <input 
+              type="text" 
+              placeholder="Press Enter to add"
+              v-model="newProgramming" 
+              @keydown.enter.prevent="addTag('programming')"
+            >
+            <div class="tags">
+              <span class="tag" v-for="(tag, i) in form.skillHonor.programming" :key="i">
+                {{ tag }}
+                <button class="tag-remove" @click="removeTag('programming', i)">×</button>
+              </span>
+            </div>
           </div>
         </div>
         <div class="form-group">
-          <label>Description</label>
-          <textarea v-model="proj.detailsStr" rows="3" placeholder="Line break as a new record"></textarea>
+          <label>Office Skill</label>
+          <div class="tag-input">
+            <input 
+              type="text" 
+              placeholder="Press Enter to add"
+              v-model="newOffice" 
+              @keydown.enter.prevent="addTag('office')"
+            >
+            <div class="tags">
+              <span class="tag" v-for="(tag, i) in form.skillHonor.office" :key="i">
+                {{ tag }}
+                <button class="tag-remove" @click="removeTag('office', i)">×</button>
+              </span>
+            </div>
+          </div>
         </div>
-        <button class="btn btn-danger" @click="removeProject(idx)">Delete</button>
+        <div class="form-group">
+          <label>Awards</label>
+          <div class="tag-input">
+            <input 
+              type="text" 
+              placeholder="Press Enter to add"
+              v-model="newAward" 
+              @keydown.enter.prevent="addTag('awards')"
+            >
+            <div class="tags">
+              <span class="tag" v-for="(tag, i) in form.skillHonor.awards" :key="i">
+                {{ tag }}
+                <button class="tag-remove" @click="removeTag('awards', i)">×</button>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Scholarships</label>
+          <div class="tag-input">
+            <input 
+              type="text" 
+              placeholder="Press Enter to add"
+              v-model="newScholarship" 
+              @keydown.enter.prevent="addTag('scholarships')"
+            >
+            <div class="tags">
+              <span class="tag" v-for="(tag, i) in form.skillHonor.scholarships" :key="i">
+                {{ tag }}
+                <button class="tag-remove" @click="removeTag('scholarships', i)">×</button>
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
-      <button class="btn btn-primary" @click="addProject">Add Projects Experience</button>
-    </div>
 
-    <div class="section-header" @click="toggleSection('skills')">
-      <h2>Skills and Honor</h2>
-      <span class="toggle-icon">{{ sectionStates.skills ? '▼' : '▶' }}</span>
-    </div>
-    <div class="form-section" v-show="sectionStates.skills">
-      <div class="form-group">
-        <label>Language</label>
-        <div class="tag-input">
-          <input 
-            type="text" 
-            placeholder="Press Enter to add"
-            v-model="newLanguage" 
-            @keydown.enter.prevent="addTag('languages')"
-          >
-          <div class="tags">
-            <span class="tag" v-for="(tag, i) in form.skillHonor.languages" :key="i">
-              {{ tag }}
-              <button class="tag-remove" @click="removeTag('languages', i)">×</button>
-            </span>
-          </div>
-        </div>
+      <div class="actions">
+        <button class="btn btn-primary" @click="submit">Save</button>
+        <button class="btn" @click="reset">Reset</button>
+        <button class="btn btn-secondary" @click="togglePreview">
+              {{ showPreview ? 'Hide Preview' : 'Show Preview' }}
+        </button>
       </div>
-      <div class="form-group">
-        <label>Programming Language</label>
-        <div class="tag-input">
-          <input 
-            type="text" 
-            placeholder="Press Enter to add"
-            v-model="newProgramming" 
-            @keydown.enter.prevent="addTag('programming')"
-          >
-          <div class="tags">
-            <span class="tag" v-for="(tag, i) in form.skillHonor.programming" :key="i">
-              {{ tag }}
-              <button class="tag-remove" @click="removeTag('programming', i)">×</button>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Office Skill</label>
-        <div class="tag-input">
-          <input 
-            type="text" 
-            placeholder="Press Enter to add"
-            v-model="newOffice" 
-            @keydown.enter.prevent="addTag('office')"
-          >
-          <div class="tags">
-            <span class="tag" v-for="(tag, i) in form.skillHonor.office" :key="i">
-              {{ tag }}
-              <button class="tag-remove" @click="removeTag('office', i)">×</button>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Awards</label>
-        <div class="tag-input">
-          <input 
-            type="text" 
-            placeholder="Press Enter to add"
-            v-model="newAward" 
-            @keydown.enter.prevent="addTag('awards')"
-          >
-          <div class="tags">
-            <span class="tag" v-for="(tag, i) in form.skillHonor.awards" :key="i">
-              {{ tag }}
-              <button class="tag-remove" @click="removeTag('awards', i)">×</button>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Scholarships</label>
-        <div class="tag-input">
-          <input 
-            type="text" 
-            placeholder="Press Enter to add"
-            v-model="newScholarship" 
-            @keydown.enter.prevent="addTag('scholarships')"
-          >
-          <div class="tags">
-            <span class="tag" v-for="(tag, i) in form.skillHonor.scholarships" :key="i">
-              {{ tag }}
-              <button class="tag-remove" @click="removeTag('scholarships', i)">×</button>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="actions">
-      <button class="btn btn-primary" @click="submit">Save</button>
-      <button class="btn" @click="reset">Reset</button>
     </div>
   </div>
+
+    <!-- 预览部分 -->
+    <div class="preview-container" v-if="showPreview">
+      <div class="preview-header">
+        <h2>Resume Preview</h2>
+        <button class="btn btn-small" @click="refreshPreview">Refresh</button>
+      </div>
+      <div class="preview-content" v-html="previewHtml"></div>
+    </div>
+</div>
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, computed, watch, onMounted } from 'vue'
 import html2pdf from 'html2pdf.js'
 import Handlebars from 'handlebars';
 
+// 预览相关状态
+const showPreview = ref(true)
+const templateCache = ref('')
+const previewHtml = ref('')
 
 // 区域折叠状态控制
 const sectionStates = reactive({
@@ -333,6 +353,85 @@ form.skillHonor = {
   scholarships: ['National Scholarship']
 }
 
+// 切换预览显示
+const togglePreview = () => {
+  showPreview.value = !showPreview.value
+  if (showPreview.value && !templateCache.value) {
+    loadTemplate()
+  }
+}
+
+// 加载模板
+const loadTemplate = async () => {
+  try {
+    const templatePath = window.location.hostname === 'localhost' 
+      ? '/template/template.html'
+      : '/EasyResume/template/template.html'
+    
+    const response = await fetch(templatePath)
+    if (response.ok) {
+      templateCache.value = await response.text()
+      updatePreview()
+    }
+  } catch (error) {
+    console.error('Failed to load template:', error)
+  }
+}
+
+// 处理表单数据用于预览
+const processedFormData = computed(() => {
+  const data = JSON.parse(JSON.stringify(form))
+  
+  // 转换 detailsStr 为数组
+  data.workExperience.forEach(w => {
+    w.details = w.detailsStr ? w.detailsStr.split('\n').filter(Boolean) : []
+  })
+  data.projects.forEach(p => {
+    p.details = p.detailsStr ? p.detailsStr.split('\n').filter(Boolean) : []
+  })
+  
+  return data
+})
+
+// 更新预览内容
+const updatePreview = () => {
+  if (!templateCache.value) return
+  
+  try {
+    const template = Handlebars.compile(templateCache.value)
+    previewHtml.value = template(processedFormData.value)
+  } catch (error) {
+    console.error('Failed to compile template:', error)
+    previewHtml.value = '<p>Preview generation failed</p>'
+  }
+}
+
+// 手动刷新预览
+const refreshPreview = () => {
+  updatePreview()
+}
+
+// 监听表单数据变化，实时更新预览
+watch(
+  () => processedFormData.value,
+  () => {
+    if (showPreview.value && templateCache.value) {
+      // 添加防抖，避免频繁更新
+      clearTimeout(updatePreview.timer)
+      updatePreview.timer = setTimeout(updatePreview, 300)
+    }
+  },
+  { deep: true }
+)
+
+// 组件挂载时初始化
+onMounted(() => {
+  if (showPreview.value) {
+    loadTemplate()
+  }
+})
+
+
 const addEducation = () => {
   form.education.push({
     institution: '',
@@ -393,8 +492,12 @@ const removeTag = (type, index) => {
 }
 
 const exportPDF = async (data) => {
+  const templatePath = window.location.hostname === 'localhost' 
+  ? '/template/template.html'  // 本地开发环境
+  : '/EasyResume/template/template.html';  // GitHub Pages 环境，请替换为您的实际仓库名
+
   // 通过 fetch 获取 public/template/template.html 文件内容
-  const response = await fetch('/template/template.html');
+  const response = await fetch(templatePath);
   const templateSrc = await response.text();
 
   // 编译模板并渲染数据
@@ -408,6 +511,16 @@ const exportPDF = async (data) => {
     html2canvas:  { scale: 2 },
     jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
   }
+
+  // 获取 PDF blob 数据
+  const pdfBlob = await html2pdf().set(options).from(html).outputPdf('blob')
+  
+  // 创建下载链接
+  const url = URL.createObjectURL(pdfBlob)
+  
+  // 打印下载链接到控制台
+  console.log('PDF 下载链接:', url)
+  
   html2pdf().set(options).from(html).save()
 }
 
@@ -435,6 +548,101 @@ const reset = () => {
 </script>
 
 <style scoped>
+/* 容器布局 */
+.container {
+  display: flex;
+  gap: 20px;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.form-container {
+  flex: 1;
+  min-width: 600px;
+}
+
+.preview-container {
+  flex: 1;
+  min-width: 600px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 20px;
+  position: sticky;
+  top: 20px;
+  height: fit-content;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  margin-top: 40px;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #42b983;
+}
+
+.preview-header h2 {
+  color: #42b983;
+  margin: 0;
+}
+
+.preview-content {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  min-height: 400px;
+  overflow: hidden;
+  padding:40px 30px;
+}
+
+/* 预览内容样式调整 */
+.preview-content :deep(*) {
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+}
+
+.preview-content :deep(h1) {
+  font-size: 18px !important;
+}
+
+.preview-content :deep(h2) {
+  font-size: 14px !important;
+}
+
+.preview-content :deep(h3) {
+  font-size: 13px !important;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #545b62;
+}
+
+.btn-small {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .container {
+    flex-direction: column;
+  }
+  
+  .preview-container {
+    position: static;
+    max-height: none;
+  }
+}
+
 .resume-header{
   text-align: center;
   margin: 20px 0;

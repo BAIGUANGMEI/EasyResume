@@ -166,36 +166,46 @@
     <h2>SKILL & HONOR</h2>
 
     <div class="item">
+        {{#if skillHonor.languages}}
         <div>
             <span style="font-weight: bold">Language: </span>
             {{#each skillHonor.languages}}
             <span>{{this}} | </span>
             {{/each}}
         </div>
+        {{/if}}
+        {{#if skillHonor.programming}}
         <div>
             <span style="font-weight: bold">Programming Language: </span>
             {{#each skillHonor.programming}}
             <span>{{this}} | </span>
             {{/each}}
         </div>
+        {{/if}}
+        {{#if skillHonor.office}}
         <div>
             <span style="font-weight: bold">Office: </span>
             {{#each skillHonor.office}}
             <span>{{this}} | </span>
             {{/each}}
         </div>
+        {{/if}}
+        {{#if skillHonor.awards}}
         <div>
             <span style="font-weight: bold">Awards: </span>
             {{#each skillHonor.awards}}
             <span>{{this}} | </span>
             {{/each}}
         </div>
+        {{/if}}
+        {{#if skillHonor.scholarships}}
         <div>
             <span style="font-weight: bold">Scholarships: </span>
             {{#each skillHonor.scholarships}}
             <span>{{this}} | </span>
             {{/each}}
         </div>
+        {{/if}}
     </div>
 </div>
 </body>
