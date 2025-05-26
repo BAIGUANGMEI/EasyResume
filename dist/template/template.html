@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>{{name}}</title>
+    <style>
+        body {
+            margin: 40px 30px;
+        }
+        header {
+            text-align: center;
+        }
+
+        h2 {
+            font-family: Times New Roman,serif;
+            border-bottom: 1.5px solid #000;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+            margin-top: 10px;
+        }
+
+        ul{
+            margin: 0;
+            padding-left: 30px;
+        }
+
+        .head-name{
+            font-family: Times New Roman,serif;
+            font-size: 1.9em;
+            margin: 0;
+        }
+
+        .head-item{
+            font-family: Times New Roman,serif;
+            margin: 0;
+            font-size: 1em;
+        }
+
+        .education-content{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .item{
+            font-family: Times New Roman,serif;
+            font-size: 1em;
+            padding:0 20px;
+        }
+
+        .institution {
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .degree{
+            font-style: italic;
+        }
+
+        .education-time {
+            font-style: italic;
+        }
+
+        .work-content{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .company{
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .work-position{
+            font-style: italic;
+        }
+
+        .work-time{
+            font-style: italic;
+        }
+
+        .projects-content{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .title{
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .projects-position{
+            font-style: italic;
+        }
+
+        .projects-time{
+            font-style: italic;
+        }
+
+        .extracurricular-content{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .extracurricular-title{
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .extracurricular-position{
+            font-style: italic;
+        }
+
+        .extracurricular-time{
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1 class="head-name">{{name}}</h1>
+    <p class="head-item">{{phone}} | <a href="mailto:{{email}}">{{email}}</a></p>
+</header>
+
+<div class="section">
+    <h2>EDUCATION</h2>
+    {{#each education}}
+    <div class="item education">
+        <div class="education-content">
+            <div class="institution">{{institution}}</div>
+            <div class="education-location">{{location}}</div>
+        </div>
+        <div class="education-content">
+            <div class="degree">{{degree}} in {{major}}</div>
+            <div class="education-time">{{start}} - {{end}}</div>
+        </div>
+        <div class="GPA">GPA : {{GPA}}/{{TotalGPA}}</div>
+    </div>
+    {{/each}}
+</div>
+
+{{#if workExperience}}
+<div class="section">
+    <h2>WORK EXPERIENCES</h2>
+    {{#each workExperience}}
+    <div class="item work">
+        <div class="work-content">
+            <div class="company">{{company}}</div>
+            <div class="work-location">{{location}}</div>
+        </div>
+        <div class="work-content">
+            <div class="work-position">{{position}}</div>
+            <div class="work-time">{{start}} - {{end}}</div>
+        </div>
+        <ul>
+            {{#each details}}
+            <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/each}}
+</div>
+{{/if}}
+
+{{#if projects}}
+<div class="section">
+    <h2>PROJECTS EXPERIENCES</h2>
+    {{#each projects}}
+    <div class="item">
+        <div class="title">{{title}}</div>
+        <div class="projects-content">
+            <div class="projects-position">{{position}}</div>
+            <div class="projects-time">{{start}} - {{end}}</div>
+        </div>
+        <ul>
+            {{#each details}}
+            <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/each}}
+</div>
+{{/if}}
+
+{{#if extracurricular}}
+<div class="section">
+    <h2>EXTRACURRICULAR EXPERIENCES</h2>
+    {{#each extracurricular}}
+    <div class="item">
+        <div class="extracurricular-content">
+            <div class="extracurricular-title">{{title}}</div>
+            <div class="extracurricular-location">{{location}}</div>
+        </div>
+        <div class="extracurricular-content">
+            <div class="extracurricular-position">{{position}}</div>
+            <div class="extracurricular-time">{{start}} - {{end}}</div>
+        </div>
+        <ul>
+            {{#each details}}
+            <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/each}}
+</div>
+{{/if}}
+
+<div class="section">
+    <h2>SKILL & HONOR</h2>
+
+    <div class="item">
+        {{#if skillHonor.languages}}
+        <div>
+            <span style="font-weight: bold">Language: </span>
+            {{#each skillHonor.languages}}
+            <span>{{this}} | </span>
+            {{/each}}
+        </div>
+        {{/if}}
+        {{#if skillHonor.programming}}
+        <div>
+            <span style="font-weight: bold">Programming Language: </span>
+            {{#each skillHonor.programming}}
+            <span>{{this}} | </span>
+            {{/each}}
+        </div>
+        {{/if}}
+        {{#if skillHonor.office}}
+        <div>
+            <span style="font-weight: bold">Office: </span>
+            {{#each skillHonor.office}}
+            <span>{{this}} | </span>
+            {{/each}}
+        </div>
+        {{/if}}
+        {{#if skillHonor.awards}}
+        <div>
+            <span style="font-weight: bold">Awards: </span>
+            {{#each skillHonor.awards}}
+            <span>{{this}} | </span>
+            {{/each}}
+        </div>
+        {{/if}}
+        {{#if skillHonor.scholarships}}
+        <div>
+            <span style="font-weight: bold">Scholarships: </span>
+            {{#each skillHonor.scholarships}}
+            <span>{{this}} | </span>
+            {{/each}}
+        </div>
+        {{/if}}
+        {{#if skillHonor.certificates}}
+        <div>
+            <span style="font-weight: bold">Certificates: </span>
+            {{#each skillHonor.certificates}}
+            <span>{{this}} | </span>
+            {{/each}}
+        </div>
+        {{/if}}
+    </div>
+</div>
+</body>
+</html>
