@@ -60,6 +60,7 @@
               <input type="text" v-model="edu.TotalGPA">
             </div>
           </div>
+
           <div class="form-row">
             <div class="form-group half">
               <label>Start Time</label>
@@ -70,13 +71,14 @@
               <input type="text" v-model="edu.end">
             </div>
           </div>
+
           <button class="btn btn-danger" @click="removeEducation(idx)">Delete</button>
         </div>
         <button class="btn btn-primary" @click="addEducation">Add Education</button>
       </div>
 
       <div class="section-header" @click="toggleSection('work')">
-        <h2>Work Experience</h2>
+        <h2>Work Experiences</h2>
         <span class="toggle-icon">{{ sectionStates.work ? '▼' : '▶' }}</span>
       </div>
       <div class="form-section" v-show="sectionStates.work">
@@ -115,7 +117,7 @@
       </div>
 
       <div class="section-header" @click="toggleSection('projects')">
-        <h2>Projects Experience</h2>
+        <h2>Projects Experiences</h2>
         <span class="toggle-icon">{{ sectionStates.projects ? '▼' : '▶' }}</span>
       </div>
       <div class="form-section" v-show="sectionStates.projects">
@@ -147,6 +149,45 @@
           <button class="btn btn-danger" @click="removeProject(idx)">Delete</button>
         </div>
         <button class="btn btn-primary" @click="addProject">Add Projects Experience</button>
+      </div>
+
+      <div class="section-header" @click="toggleSection('extracurricular')">
+        <h2>Extracurricular Experiences</h2>
+        <span class="toggle-icon">{{ sectionStates.extracurricular ? '▼' : '▶' }}</span>
+      </div>
+      <div class="form-section" v-show="sectionStates.extracurricular">
+        <div class="card" v-for="(extra, idx) in form.extracurricular" :key="idx">
+          <div class="form-row">
+            <div class="form-group half">
+              <label>Extracurricular Activity Name</label>
+              <input type="text" v-model="extra.title">
+            </div>
+            <div class="form-group half">
+              <label>Location</label>
+              <input type="text" v-model="extra.location">
+            </div>
+            <div class="form-group half">
+              <label>Position</label>
+              <input type="text" v-model="extra.position">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group half">
+              <label>Start Time</label>
+              <input type="text" v-model="extra.start">
+            </div>
+            <div class="form-group half">
+              <label>End Time</label>
+              <input type="text" v-model="extra.end">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea v-model="extra.detailsStr" rows="3" placeholder="Line break as a new record"></textarea>
+          </div>
+          <button class="btn btn-danger" @click="removeExtracurricular(idx)">Delete</button>
+        </div>
+        <button class="btn btn-primary" @click="addExtracurricular">Add Extracurricular Experience</button>
       </div>
 
       <div class="section-header" @click="toggleSection('skills')">
@@ -239,7 +280,26 @@
             </div>
           </div>
         </div>
+        <div class="form-group">
+          <label>Certificates</label>
+          <div class="tag-input">
+            <input
+                type="text"
+                placeholder="Press Enter to add"
+                v-model="newCertificate"
+                @keydown.enter.prevent="addTag('certificates')"
+            >
+            <div class="tags">
+              <span class="tag" v-for="(tag, i) in form.skillHonor.certificates" :key="i">
+                {{ tag }}
+                <button class="tag-remove" @click="removeTag('certificates', i)">×</button>
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
+
+
 
       <div class="actions">
         <button class="btn btn-primary" @click="submit">Save</button>
@@ -278,6 +338,7 @@ const sectionStates = reactive({
   education: true,
   work: false,
   projects: false,
+  extracurricular: false,
   skills: false
 })
 
@@ -291,6 +352,7 @@ const newProgramming = ref('')
 const newOffice = ref('')
 const newAward = ref('')
 const newScholarship = ref('')
+const newCertificate = ref('')
 
 const defaultForm = {
   name: '',
@@ -299,12 +361,14 @@ const defaultForm = {
   education: [],
   workExperience: [],
   projects: [],
+  extracurricular: [],
   skillHonor: {
     languages: [],
     programming: [],
     office: [],
     awards: [],
-    scholarships: []
+    scholarships: [],
+    certificates: [],
   }
 }
 
@@ -318,7 +382,7 @@ form.education = [
   {
     institution: 'Hangzhou Dianzi University',
     location: 'Hangzhou, China',
-    degree: 'Bachelor',
+    degree: 'Bachelor of Science',
     major: 'Information management and Information System',
     start: 'Aug. 2021',
     end: 'Jun. 2025',
@@ -345,12 +409,23 @@ form.projects = [
     detailsStr: 'Developed and maintained web applications using Vue.js\nResponsible for the front-end architecture and design'
   }
 ]
+form.extracurricular = [
+  {
+    title: 'Volunteer, Local Charity',
+    location: 'Hangzhou, China',
+    position: 'Coordinator',
+    start: 'June 2023',
+    end: 'August 2023',
+    detailsStr: 'Organized community events and fundraising activities\nCoordinated with local businesses for sponsorships'
+  }
+]
 form.skillHonor = {
   languages: ['Chinese (Native)', 'English (IELTS 7)'],
   programming: ['Python', 'JavaScript', 'Java', 'C++'],
   office: ['Microsoft Office', 'Excel', 'PowerPoint'],
   awards: ['First Prize in National College Student Programming Contest'],
-  scholarships: ['National Scholarship']
+  scholarships: ['National Scholarship'],
+  certificates: ['Python Programming Certificate', 'Data Science Certificate']
 }
 
 // 切换预览显示
@@ -388,6 +463,9 @@ const processedFormData = computed(() => {
   })
   data.projects.forEach(p => {
     p.details = p.detailsStr ? p.detailsStr.split('\n').filter(Boolean) : []
+  })
+  data.extracurricular.forEach(e => {
+    e.details = e.detailsStr ? e.detailsStr.split('\n').filter(Boolean) : []
   })
   
   return data
@@ -469,6 +547,18 @@ const addProject = () => {
 }
 const removeProject = idx => form.projects.splice(idx, 1)
 
+const addExtracurricular = () => {
+  form.extracurricular.push({
+    title: '',
+    position: '',
+    start: '',
+    end: '',
+    detailsStr: ''
+  })
+}
+
+const removeExtracurricular = idx => form.extracurricular.splice(idx, 1)
+
 // 添加标签
 const addTag = (type) => {
   const tagMap = {
@@ -476,7 +566,8 @@ const addTag = (type) => {
     'programming': newProgramming,
     'office': newOffice,
     'awards': newAward,
-    'scholarships': newScholarship
+    'scholarships': newScholarship,
+    'certificates': newCertificate
   }
   
   const value = tagMap[type].value.trim()
@@ -534,6 +625,10 @@ const submit = () => {
   data.projects.forEach(p => {
     p.details = p.detailsStr ? p.detailsStr.split('\n').filter(Boolean) : []
     delete p.detailsStr
+  })
+  data.extracurricular.forEach(e => {
+    e.details = e.detailsStr ? e.detailsStr.split('\n').filter(Boolean) : []
+    delete e.detailsStr
   })
   
   // 这里可以发送 data 到后端或保存到本地
@@ -708,12 +803,12 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   margin: 0 -8px;
+  gap: 10px;
 }
 
 .form-group {
   margin-bottom: 16px;
   width: 100%;
-  padding: 0 8px;
   transition: all 0.3s ease;
 }
 
